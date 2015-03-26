@@ -136,7 +136,7 @@ public void onClick(View v)
 						name = cursor2.getString(cursor2.getColumnIndex("word"));
 						wrongword=true;
 						word1=word;
-						for ( i=0; i<=(name.length());i++)
+						for ( i=0; i<(name.length());i++)
 						{
 							//labels.add((name.indexOf(word.charAt(i))==-1) ? (name) : labels.add(name));
 							int position=word1.indexOf(name.charAt(i));
@@ -146,8 +146,10 @@ public void onClick(View v)
 								//name=name.substring(i+1);
 								word1=word1.substring(0,position)+word1.substring(position+1,word1.length());
 							}
-							else wrongword=false;
-								;
+							else {wrongword=false;
+							break;
+							}	
+							;
 							}
 						if(wrongword) labels.add(name);
 						dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
