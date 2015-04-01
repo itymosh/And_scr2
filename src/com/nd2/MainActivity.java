@@ -24,6 +24,7 @@ import java.util.Map.Entry;
 
 
 
+
 //import com.nd2.SQ;
 import com.nd2.R;	
 
@@ -35,13 +36,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
-
+	    Spinner s;
 		EditText txtData1;	
 //	    SQ sqh;
 //		SQLiteDatabase sqdb;
@@ -49,6 +51,7 @@ public class MainActivity extends ActionBarActivity {
 		SQLiteDatabase db;
 		int click;
 		double timesum=0;
+		String valToSet;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -67,9 +70,9 @@ public class MainActivity extends ActionBarActivity {
 			 e.printStackTrace();
 		 	 }
 		db = dbHelper.getWritableDatabase();
+		
 	}		
 	
-
 	
 public void onClick(View v) 
 {
@@ -77,6 +80,10 @@ public void onClick(View v)
 		{
 			case R.id.seven_letters:
 				click++;
+			
+				s = (Spinner) findViewById(R.id.spinner1);
+				
+				
 			// Метод 2: INSERT через SQL-запрос
 			//String insertQuery = "INSERT INTO " + SQ.TABLE_NAME+ " (" + SQ.CATNAME + ") VALUES ('"	+ txtData1.getText().toString() + "')";
 			//sqdb.execSQL(insertQuery);nb
@@ -123,8 +130,9 @@ public void onClick(View v)
 			ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
 					android.R.layout.simple_spinner_item, labels1);
 			Spinner s2 = (Spinner) findViewById(R.id.spinner2);
-			Spinner s;
-			s = (Spinner) findViewById(R.id.spinner1);
+		
+	//		s.setOnItemSelectedListener(this);
+			
 			while (it.hasNext()) 
 				{ pairs = (Map.Entry<Character,String>)it.next();
 				 it2 = chars.entrySet().iterator();
@@ -216,7 +224,17 @@ public void onClick(View v)
 			TextView text = (TextView) findViewById(R.id.textView2);
 			text.setText(timestart+"\n"+timeend+"\n"+(date.getTime()-date2.getTime())/1000.+"  avg "+timesum/click);
 	//	default: Log.i("1w","ss"); 
+			s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+			        Object item = parent.getItemAtPosition(pos);
+			        valToSet = s.getSelectedItem().toString();
+					
+			    }
+			    public void onNothingSelected(AdapterView<?> parent) {
+			    }
+			});
 		}
+		
 		
 }
 	
@@ -239,4 +257,6 @@ public void onClick(View v)
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 }
