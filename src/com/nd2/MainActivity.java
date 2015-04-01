@@ -5,11 +5,19 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+
+
+
 
 
 
@@ -77,12 +85,13 @@ public void onClick(View v)
 			String q="" ,qq="",query="",name,timestart,timeend, charthatwedontneed="",word1="";
 			
 			//String word=txtData1.getText().toString();
-			String word="протимс";
+			String word="тимни";//"протимс";
 		    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			   //get current date time with Date()
 			   Date date = new Date();
 			   timestart=(dateFormat.format(date));
 			Map<Character,String> chars = new HashMap<Character, String>();
+			HashSet<String> byorder = new HashSet<String>();
 			///	char[] charArray = new char[] ;//{ 'a', 'b', 'c', 'd', 'e' }; 
 			/*for ( i=0; i<(word.length());i++)
 				{
@@ -107,8 +116,15 @@ public void onClick(View v)
 			Cursor cursor3,cursor2;
 			Boolean t,wrongword;
 			ArrayList<String>	labels = new ArrayList<String>();
+			ArrayList<String>	labels1 = new ArrayList<String>();
 			ArrayAdapter<String> dataAdapter;
+			dataAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, labels);
+			ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+					android.R.layout.simple_spinner_item, labels1);
+			Spinner s2 = (Spinner) findViewById(R.id.spinner2);
 			Spinner s;
+			s = (Spinner) findViewById(R.id.spinner1);
 			while (it.hasNext()) 
 				{ pairs = (Map.Entry<Character,String>)it.next();
 				 it2 = chars.entrySet().iterator();
@@ -128,9 +144,8 @@ public void onClick(View v)
 						
 					cursor2 = db.rawQuery(query, null);
 					
-					dataAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, labels);
-					s = (Spinner) findViewById(R.id.spinner1);
+					
+					
 					while (cursor2.moveToNext()) 
 						{
 						name = cursor2.getString(cursor2.getColumnIndex("word"));
@@ -151,15 +166,47 @@ public void onClick(View v)
 							}	
 							;
 							}
-						if(wrongword) labels.add(name);
-						dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						dataAdapter.notifyDataSetChanged();
-						s.setAdapter(dataAdapter);
+						if(wrongword) 
+						{
+							labels.add(name);
+							labels1.add(name);
+						}	
+							///labels.set(1,name);byorder.add(name);
 						}
 					cursor2.close();  			
 					}
 					}
 				}
+		//	labels.add("4434");	labels.add("121");labels.add("22");labels.add("9");labels.add("4446");  labels.add("5448"); labels.add("2447");
+			Collections.sort((labels),new Comparator<String>()
+					{
+					  public int compare(String s1,String s2)
+					   {
+					   	
+						  //int x1 =(s1.charAt(0)- '0'); 
+					//		   int x2=( s2.charAt(0)- '0');
+						  if((s1.length() - s2.length()<0)) {return(-1); }
+					     if((s1.length() - s2.length()>0)) return(1);  
+					    		 else {boolean orderbyalphabet=false, poperednisymvolyok=true;
+					    		 
+					    			 for (int i=0;i<s1.length();i++)	
+									   	{ poperednisymvolyok=(i>0&&(s1.charAt(i-1)-'0'>=s2.charAt(i-1)-'0')&&poperednisymvolyok ? true : false);
+									   	if(i==0) poperednisymvolyok=true;
+									   		if((s1.charAt(i)-'0')-(s2.charAt(i)-'0')>0&&poperednisymvolyok) {orderbyalphabet=true; } //else  orderbyalphabet=false;
+									   	}
+					    			 //if((s1.charAt(0)-'0')-(s2.charAt(0)-'0')>0) orderbyalphabet=true;
+					    			 if((s1.length() == s2.length())&&orderbyalphabet) return(1);
+					    				else return(-1);}
+					    }
+					});
+			//Collections.sort(labels);
+			//labels1.addAll(((labels)));
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			dataAdapter.notifyDataSetChanged();
+			s.setAdapter(dataAdapter);
+			dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			dataAdapter2.notifyDataSetChanged();
+			s2.setAdapter(dataAdapter2);
 			Date date2=new Date();
 			timeend=(dateFormat.format(date2));
 		//	DecimalFormat df = new DecimalFormat("####0.#");

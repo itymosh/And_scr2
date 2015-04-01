@@ -15,14 +15,6 @@
         android:ems="10"
         android:hint="7 літер" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="25dp" />
-
     <Button
         android:id="@+id/seven_letters"
         android:layout_width="wrap_content"
@@ -39,5 +31,20 @@
         android:layout_alignLeft="@+id/spinner1"
         android:layout_below="@+id/spinner1"
         android:text="TextView" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/seven_letters"
+        android:layout_marginTop="22dp" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>
