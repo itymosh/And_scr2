@@ -2,16 +2,14 @@ package com.nd2;
 
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,53 +18,54 @@ import java.util.Map.Entry;
 
 
 
-
-
-
-
-
 //import com.nd2.SQ;
-import com.nd2.R;	
-
+//import com.nd2.R;	
 import android.support.v7.app.ActionBarActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	    Spinner s;
 		EditText txtData1;	
-//	    SQ sqh;
-//		SQLiteDatabase sqdb;
 		DataBaseHelper dbHelper;
 		SQLiteDatabase db;
 		int click;
+		int sort1=0,sort3=0;
 		double timesum=0;
 		String valToSet;
+		ListView lvCustomList;
+		 HashMap<String, String> map2; 
+		 ArrayList<String>	labels = new ArrayList<String>();
+			ArrayList<String>	labels1 = new ArrayList<String>();
+			   List<HashMap<String, String>> fillMaps;
+			   SpecialAdapter adapter;
+			   String[] from = new String[] {"rowid", "col_1","col_2","col_3"};
+		        int[] to = new int[] { R.id.item1, R.id.item2, R.id.item3,R.id.item4 };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-//		sqh = new SQ(this);
-//		sqdb = sqh.getWritableDatabase();
-		//		sqh.onUpgrade(sqdb, 1, 2);
+		 
 		txtData1 = (EditText) findViewById(R.id.editText1);
 		 try {
 			 dbHelper = new DataBaseHelper(this);
 		 	 } 
 		 catch (IOException e) 
 		 	 {
-			 // TODO Auto-generated catch block
 			 e.printStackTrace();
 		 	 }
 		db = dbHelper.getWritableDatabase();
@@ -79,26 +78,34 @@ public void onClick(View v)
 		switch (v.getId()) 
 		{
 			case R.id.seven_letters:
-				click++;
+			{ 
+				labels.clear();
+				sort1=0;sort3=0;
+			click++;
+			s = (Spinner) findViewById(R.id.spinner1);
+			//ListView mylist =  (ListView) this.findViewById(R.id.listView1);
+			lvCustomList = (ListView) findViewById(R.id.listView1);
+		
+		
+			 int rowid=0;
+	fillMaps = new ArrayList<HashMap<String, String>>();
+		//	ContactListAdapter contactListAdapter = new ContactListAdapter(
+		//		    MainActivity.this, cocktailListView);
+			   ArrayAdapter<String> dataAdapter;
+				dataAdapter = new ArrayAdapter<String>(this,
+						android.R.layout.simple_spinner_item, labels);
 			
-				s = (Spinner) findViewById(R.id.spinner1);
-				
-				
-			// ћетод 2: INSERT через SQL-запрос
-			//String insertQuery = "INSERT INTO " + SQ.TABLE_NAME+ " (" + SQ.CATNAME + ") VALUES ('"	+ txtData1.getText().toString() + "')";
-			//sqdb.execSQL(insertQuery);nb
-			//txtData1.setText("");	
+			
 			int i;
 			String q="" ,qq="",query="",name,timestart,timeend, charthatwedontneed="",word1="";
 			
-			//String word=txtData1.getText().toString();
-			String word="тимни";//"протимс";
+			String word=txtData1.getText().toString();
+		//	String word="тимни";//"протимс";
 		    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			   //get current date time with Date()
-			   Date date = new Date();
-			   timestart=(dateFormat.format(date));
+			Date date = new Date(); //get current date time with Date()
+			timestart=(dateFormat.format(date));
 			Map<Character,String> chars = new HashMap<Character, String>();
-			HashSet<String> byorder = new HashSet<String>();
+			//HashSet<String> byorder = new HashSet<String>();
 			///	char[] charArray = new char[] ;//{ 'a', 'b', 'c', 'd', 'e' }; 
 			/*for ( i=0; i<(word.length());i++)
 				{
@@ -122,15 +129,14 @@ public void onClick(View v)
 			it = chars.entrySet().iterator();
 			Cursor cursor3,cursor2;
 			Boolean t,wrongword;
-			ArrayList<String>	labels = new ArrayList<String>();
-			ArrayList<String>	labels1 = new ArrayList<String>();
-			ArrayAdapter<String> dataAdapter;
-			dataAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_spinner_item, labels);
+			
+			 
+		//			  lvCustomList.setAdapter(contactListAdapter);
+					 
 			ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
 					android.R.layout.simple_spinner_item, labels1);
 			Spinner s2 = (Spinner) findViewById(R.id.spinner2);
-		
+			
 	//		s.setOnItemSelectedListener(this);
 			
 			while (it.hasNext()) 
@@ -178,6 +184,8 @@ public void onClick(View v)
 						{
 							labels.add(name);
 							labels1.add(name);
+							
+
 						}	
 							///labels.set(1,name);byorder.add(name);
 						}
@@ -185,8 +193,9 @@ public void onClick(View v)
 					}
 					}
 				}
+			sortbylen();
 		//	labels.add("4434");	labels.add("121");labels.add("22");labels.add("9");labels.add("4446");  labels.add("5448"); labels.add("2447");
-			Collections.sort((labels),new Comparator<String>()
+	/*		Collections.sort((labels),new Comparator<String>()
 					{
 					  public int compare(String s1,String s2)
 					   {
@@ -207,11 +216,41 @@ public void onClick(View v)
 					    				else return(-1);}
 					    }
 					});
+			
+///=======================		in map	
+			
+		   	fillMaps.clear();
+			for(i=0;i<labels.size();i++)
+			{
+				//rowid++;
+				map2= new HashMap<String, String>();
+				  map2.put("rowid", ""+i  );
+		            map2.put("col_1",""+ labels.get(i));
+		            map2.put("col_3",""+ labels.get(i).length());
+					  fillMaps.add(map2);
+			}
+			 adapter = new SpecialAdapter(this,fillMaps,R.layout.grid_item,from,to);
+				lvCustomList.setAdapter(adapter);
+			
+			*/
+///==================			
 			//Collections.sort(labels);
 			//labels1.addAll(((labels)));
 			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			dataAdapter.notifyDataSetChanged();
 			s.setAdapter(dataAdapter);
+		//	mylist.setAdapter(dataAdapter);
+
+
+		  
+         //   map.put("col_2", "col_2_item_" );
+         //   map.put("col_3", "col_3_item_");
+		    
+	//	    SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.grid_item, from, to);
+			
+		//    ArrayAdapter<String> adapter = new ArrayAdapter<String>
+		//	(this, android.R.layout.simple_list_item_1, labels);
+		//	lvCustomList.setAdapter(adapter);
 			dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			dataAdapter2.notifyDataSetChanged();
 			s2.setAdapter(dataAdapter2);
@@ -224,21 +263,183 @@ public void onClick(View v)
 			TextView text = (TextView) findViewById(R.id.textView2);
 			text.setText(timestart+"\n"+timeend+"\n"+(date.getTime()-date2.getTime())/1000.+"  avg "+timesum/click);
 	//	default: Log.i("1w","ss"); 
-			s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-			        Object item = parent.getItemAtPosition(pos);
-			        valToSet = s.getSelectedItem().toString();
+			
+			lvCustomList.setOnItemClickListener(new OnItemClickListener() {
+				  public void onItemClick(AdapterView adapter, View view, int position, long id) 
+				  {
+				    TextView item2 = (TextView)view.findViewById(R.id.item2);
+				    item2.setTextColor(android.graphics.Color.YELLOW);
+				    Toast.makeText(getApplicationContext(), item2.getText().toString(),//((TextView) view).getText(),
+				    Toast.LENGTH_SHORT).show();
+				  }
+				});	
+	//	OnItemClickListener itemClickedListener = new OnItemClickListener() {
+			
+		//		  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		///		    // TODO Auto-generated method stub    
+			//	    TextView item2 = (TextView)view.findViewById(R.id.item2);
+			//	    item2.setTextColor(android.graphics.Color.YELLOW);
+		////		    }
+		//		};
+	//		lvCustomList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+	//		    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//	//		        Object item = parent.getItemAtPosition(pos);
+	//		        valToSet = lvCustomList.getSelectedItem().toString();
 					
-			    }
-			    public void onNothingSelected(AdapterView<?> parent) {
-			    }
-			});
+			//    }
+		//	    public void onNothingSelected(AdapterView<?> parent) {
+			//    }
+			//});
+			break;}
+			case R.id.imageButton1:{
+				sort1++;
+				Collections.sort((labels),new Comparator<String>()
+						{
+						  public int compare(String s1,String s2)
+						   {
+						   	
+						{boolean orderbyalphabet=false, poperednisymvolyok=true;
+						    		// int length_of_shorter_word= (s1.length()<s2.length() ? s1.length() : s2.length());
+						if (s1.length()!=s2.length()) 
+							{if(s1.length()<s2.length())
+						{ s1= (s1+s2.substring(s1.length(),s2.length()));
+						s1=s1.substring(0,s1.length()-1);
+						s1+="z";
+						}
+						
+						if(s2.length()<s1.length()) {
+						s2= (s2+s1.substring(s2.length(),s1.length()));
+						s2=s2.substring(0,s2.length()-1);
+						s2+="z";
+						}}
+						
+						
+						    			 for (int i=0;i<s1.length();i++)	
+										   	{ poperednisymvolyok=(i>0&&(s1.charAt(i-1)-'0'>=s2.charAt(i-1)-'0')&&poperednisymvolyok ? true : false);
+										   	if(i==0) poperednisymvolyok=true;
+										   		if((s1.charAt(i)-'0')-(s2.charAt(i)-'0')>0&&poperednisymvolyok) {orderbyalphabet=true; } //else  orderbyalphabet=false;
+										   	}
+						    			 if(orderbyalphabet) return(1);
+						    				else
+						    				return(-1);}
+						    }
+						});
+				
+			   	fillMaps.clear();
+				
+			   	if(sort1%2==0)
+			   	{labels1.clear();
+			   		for(int i=0;i<labels.size();i++)
+					{
+			   			labels1.add(labels.get(i));
+					}
+			   		labels.clear();
+			   		for(int i=labels1.size();i>0;i--)
+					{if (labels1.get(i-1)!=null)
+			   			labels.add(labels1.get(i-1));
+					}
+			   	}
+			   
+				for(int i=0;i<labels.size();i++)
+				{
+					//rowid++;
+				map2= new HashMap<String, String>();
+					  map2.put("rowid", ""+i  );
+			            map2.put("col_1",""+ labels.get(i));
+			            map2.put("col_3",""+ labels.get(i).length());
+						  fillMaps.add(map2);
+				}
+		
+		 adapter = new SpecialAdapter(this,fillMaps,R.layout.grid_item,from,to);
+				lvCustomList.setAdapter(adapter);				
+				break;}
+			case R.id.ImageButton01:
+				break;
+			case R.id.ImageButton02:
+				sortbylen();
+				break;
 		}
 		
 		
 }
 	
-	
+	public void sortbylen()
+	{
+
+		sort3++;
+		if(sort3%2!=0){
+		Collections.sort((labels),new Comparator<String>()
+				{
+				  public int compare(String s1,String s2)
+				   {
+				   	
+					  //int x1 =(s1.charAt(0)- '0'); 
+				//		   int x2=( s2.charAt(0)- '0');
+					  if((s1.length() - s2.length()<0)) {return(-1); }
+				     if((s1.length() - s2.length()>0)) return(1);  
+				    		 else {boolean orderbyalphabet=false, poperednisymvolyok=true;
+				    		 
+				    			 for (int i=0;i<s1.length();i++)	
+								   	{ poperednisymvolyok=(i>0&&(s1.charAt(i-1)-'0'>=s2.charAt(i-1)-'0')&&poperednisymvolyok ? true : false);
+								   	if(i==0) poperednisymvolyok=true;
+								   		if((s1.charAt(i)-'0')-(s2.charAt(i)-'0')>0&&poperednisymvolyok) {orderbyalphabet=true; } //else  orderbyalphabet=false;
+								   	}
+				    			 //if((s1.charAt(0)-'0')-(s2.charAt(0)-'0')>0) orderbyalphabet=true;
+				    			 if((s1.length() == s2.length())&&orderbyalphabet) return(1);
+				    				else return(-1);}
+				    }
+				});
+		}
+		else 
+		{Collections.sort((labels),new Comparator<String>()
+				{
+			  public int compare(String s1,String s2)
+			   {
+			   	
+				  //int x1 =(s1.charAt(0)- '0'); 
+			//		   int x2=( s2.charAt(0)- '0');
+				  if((s1.length() - s2.length()<0)) {return(-1); }
+			     if((s1.length() - s2.length()>0)) return(1);  
+			    		 else {boolean orderbyalphabet=false, poperednisymvolyok=true;
+			    		 
+			    			 for (int i=0;i<s1.length();i++)	
+							   	{ poperednisymvolyok=(i>0&&(s1.charAt(i-1)-'0'<=s2.charAt(i-1)-'0')&&poperednisymvolyok ? true : false);
+							   	if(i==0) poperednisymvolyok=true;
+							   		if((s1.charAt(i)-'0')-(s2.charAt(i)-'0')<0&&poperednisymvolyok) {orderbyalphabet=true; } //else  orderbyalphabet=false;
+							   	}
+			    			 //if((s1.charAt(0)-'0')-(s2.charAt(0)-'0')>0) orderbyalphabet=true;
+			    			 if((s1.length() == s2.length())&&orderbyalphabet) return(1);
+			    				else return(-1);}
+			    }
+			});
+		{labels1.clear();
+   		for(int i=0;i<labels.size();i++)
+		{
+   			labels1.add(labels.get(i));
+		}
+   		labels.clear();
+   		for(int i=labels1.size();i>0;i--)
+		{if (labels1.get(i-1)!=null)
+   			labels.add(labels1.get(i-1));
+		}
+   	}
+		
+		}
+	   	fillMaps.clear();
+	   	
+		for(int i=0;i<labels.size();i++)
+		{
+			//rowid++;
+		map2= new HashMap<String, String>();
+			  map2.put("rowid", ""+i  );
+	            map2.put("col_1",""+ labels.get(i));
+	            map2.put("col_3",""+ labels.get(i).length());
+				  fillMaps.add(map2);
+		}
+
+ adapter = new SpecialAdapter(this,fillMaps,R.layout.grid_item,from,to);
+		lvCustomList.setAdapter(adapter);	
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -258,5 +459,7 @@ public void onClick(View v)
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
 }
+
+//String insertQuery = "INSERT INTO " + SQ.TABLE_NAME+ " (" + SQ.CATNAME + ") VALUES ('"	+ txtData1.getText().toString() + "')";
+//sqdb.execSQL(insertQuery);
