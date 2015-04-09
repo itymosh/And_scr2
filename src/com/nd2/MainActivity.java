@@ -32,7 +32,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,15 +42,17 @@ public class MainActivity extends ActionBarActivity {
 		DataBaseHelper dbHelper;
 		SQLiteDatabase db;
 		int click;
-		int sort1=0,sort3=0;
+		int sort1=0,sort2=0,sort3=0;
 		double timesum=0;
-		String valToSet;
+		String valToSet, query="";
 		ListView lvCustomList;
+		Map<Character,Integer> charvalues;
 		 HashMap<String, String> map2; 
 		 ArrayList<String>	labels = new ArrayList<String>();
 			ArrayList<String>	labels1 = new ArrayList<String>();
 			   List<HashMap<String, String>> fillMaps;
 			   SpecialAdapter adapter;
+			   Map<Character,String> chars;
 			   String[] from = new String[] {"rowid", "col_1","col_2","col_3"};
 		        int[] to = new int[] { R.id.item1, R.id.item2, R.id.item3,R.id.item4 };
 	@Override
@@ -59,10 +60,11 @@ public class MainActivity extends ActionBarActivity {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		 
+		
 		txtData1 = (EditText) findViewById(R.id.editText1);
 		 try {
 			 dbHelper = new DataBaseHelper(this);
+	//		 dbHelper.onUpgrade(db,1,2);
 		 	 } 
 		 catch (IOException e) 
 		 	 {
@@ -80,14 +82,11 @@ public void onClick(View v)
 			case R.id.seven_letters:
 			{ 
 				labels.clear();
-				sort1=0;sort3=0;
+				sort1=0;sort2=0;sort3=0;
 			click++;
 			s = (Spinner) findViewById(R.id.spinner1);
 			//ListView mylist =  (ListView) this.findViewById(R.id.listView1);
 			lvCustomList = (ListView) findViewById(R.id.listView1);
-		
-		
-			 int rowid=0;
 	fillMaps = new ArrayList<HashMap<String, String>>();
 		//	ContactListAdapter contactListAdapter = new ContactListAdapter(
 		//		    MainActivity.this, cocktailListView);
@@ -97,14 +96,15 @@ public void onClick(View v)
 			
 			
 			int i;
-			String q="" ,qq="",query="",name,timestart,timeend, charthatwedontneed="",word1="";
+			String q="" ,qq="",name,timestart,timeend, charthatwedontneed="",word1="";
 			
 			String word=txtData1.getText().toString();
 		//	String word="тимни";//"протимс";
 		    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date(); //get current date time with Date()
 			timestart=(dateFormat.format(date));
-			Map<Character,String> chars = new HashMap<Character, String>();
+		 chars = new HashMap<Character, String>();
+			charvalues = new HashMap<Character, Integer>();
 			//HashSet<String> byorder = new HashSet<String>();
 			///	char[] charArray = new char[] ;//{ 'a', 'b', 'c', 'd', 'e' }; 
 			/*for ( i=0; i<(word.length());i++)
@@ -116,11 +116,14 @@ public void onClick(View v)
 				}*/
 			if(q.length()>4) q=q.substring(0,q.length()-3);
 			if(qq.length()>9) qq=qq.substring(0,qq.length()-14);
-			Cursor cursor1 = db.rawQuery("SELECT Code, Name FROM Main",null);// where name in(\'"+q+"\')", null);
+			Cursor cursor1 = db.rawQuery("SELECT Code, Name, Value FROM Main",null);// where name in(\'"+q+"\')", null);
 			while (cursor1.moveToNext()) 
 				{
 				if (word.indexOf(cursor1.getString(cursor1.getColumnIndex("Name")))!=-1) 
+				{
 				chars.put(cursor1.getString(cursor1.getColumnIndex("Name")).charAt(0),cursor1.getString(cursor1.getColumnIndex("Code")));
+				charvalues.put(cursor1.getString(cursor1.getColumnIndex("Name")).charAt(0),cursor1.getInt(cursor1.getColumnIndex("Value")));
+				}
 				else charthatwedontneed+="\'%"+cursor1.getString(cursor1.getColumnIndex("Name"))+"%\') and word not like (";
 				}
 			cursor1.close();
@@ -153,7 +156,7 @@ public void onClick(View v)
 					}
 					if(t)
 					{
-						query = "SELECT word, full FROM tbl"+(String)pairs.getValue()+"x"+(String)pairs2.getValue()
+						query = "SELECT word FROM tbl"+(String)pairs.getValue()+"x"+(String)pairs2.getValue()
 							+" where word not like ("+charthatwedontneed.substring(0,(charthatwedontneed.length())-22)+"\')";//+" where word like("+qq;
 						
 					cursor2 = db.rawQuery(query, null);
@@ -265,18 +268,27 @@ public void onClick(View v)
 	//	default: Log.i("1w","ss"); 
 			
 			lvCustomList.setOnItemClickListener(new OnItemClickListener() {
-				  public void onItemClick(AdapterView adapter, View view, int position, long id) 
+				  public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
 				  {
 				    TextView item2 = (TextView)view.findViewById(R.id.item2);
 				    item2.setTextColor(android.graphics.Color.YELLOW);
-				    Toast.makeText(getApplicationContext(), item2.getText().toString(),//((TextView) view).getText(),
-				    Toast.LENGTH_SHORT).show();
+				   
+				    query = "SELECT full FROM tbl"+chars.get(item2.getText().toString().charAt(0))+"x"+chars.get(item2.getText().toString().charAt(1))+" where word like '"+item2.getText().toString()+"'";
+				   Cursor cursor2 = db.rawQuery(query, null);
+					
+					
+					
+					while (cursor2.moveToNext()) 
+						{
+						Toast.makeText(getApplicationContext(), cursor2.getString(cursor2.getColumnIndex("full")),Toast.LENGTH_LONG).show();
+						}
+				    
+				    
 				  }
 				});	
 	//	OnItemClickListener itemClickedListener = new OnItemClickListener() {
 			
 		//		  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		///		    // TODO Auto-generated method stub    
 			//	    TextView item2 = (TextView)view.findViewById(R.id.item2);
 			//	    item2.setTextColor(android.graphics.Color.YELLOW);
 		////		    }
@@ -341,11 +353,15 @@ public void onClick(View v)
 			   	}
 			   
 				for(int i=0;i<labels.size();i++)
-				{
+				{int chvalue=0;
 					//rowid++;
 				map2= new HashMap<String, String>();
 					  map2.put("rowid", ""+i  );
-			            map2.put("col_1",""+ labels.get(i));
+					  map2.put("col_1",""+ labels.get(i));
+					  for (int why=0;why<labels.get(i).length();why++){
+			            chvalue+=charvalues.get(labels.get(i).charAt(why));
+					  }
+					  	map2.put("col_2",""+ chvalue);
 			            map2.put("col_3",""+ labels.get(i).length());
 						  fillMaps.add(map2);
 				}
@@ -354,7 +370,114 @@ public void onClick(View v)
 				lvCustomList.setAdapter(adapter);				
 				break;}
 			case R.id.ImageButton01:
+
+				sort2++;
+				if(sort2%2!=0){
+				Collections.sort((labels),new Comparator<String>()
+						{
+						  public int compare(String s1,String s2)
+						   {boolean orderbyalphabet=false, poperednisymvolyok=true;
+					int chvalue1=0,chvalue2=0;
+						    for (int why=0;why<s1.length();why++){
+					            chvalue1+=charvalues.get(s1.charAt(why));
+							  }
+						    for (int why=0;why<s2.length();why++){
+					            chvalue2+=charvalues.get(s2.charAt(why));
+							  }
+						if (s1.length()!=s2.length()) 
+							{if(s1.length()<s2.length())
+						{ s1= (s1+s2.substring(s1.length(),s2.length()));
+						s1=s1.substring(0,s1.length()-1);
+						s1+="z";
+						}
+						
+						if(s2.length()<s1.length()) {
+						s2= (s2+s1.substring(s2.length(),s1.length()));
+						s2=s2.substring(0,s2.length()-1);
+						s2+="z";
+						}}
+						
+						
+						    			 for (int i=0;i<s1.length();i++)	
+										   	{ poperednisymvolyok=(i>0&&(s1.charAt(i-1)-'0'>=s2.charAt(i-1)-'0')&&poperednisymvolyok ? true : false);
+										   	if(i==0) poperednisymvolyok=true;
+										   		if((s1.charAt(i)-'0')-(s2.charAt(i)-'0')>0&&poperednisymvolyok) {orderbyalphabet=true; } //else  orderbyalphabet=false;
+										   	}
+						    			 if(chvalue1>chvalue2||(chvalue1==chvalue2&&orderbyalphabet)) return(1);
+						    				else
+						    				return(-1);}
+						});
+				}
+				else 
+				{
+					Collections.sort((labels),new Comparator<String>()
+							{
+							  public int compare(String s1,String s2)
+							   {boolean orderbyalphabet=false, poperednisymvolyok=true;
+						int chvalue1=0,chvalue2=0;
+							    for (int why=0;why<s1.length();why++){
+						            chvalue1+=charvalues.get(s1.charAt(why));
+								  }
+							    for (int why=0;why<s2.length();why++){
+						            chvalue2+=charvalues.get(s2.charAt(why));
+								  }
+							if (s1.length()!=s2.length()) 
+								{if(s1.length()<s2.length())
+							{ s1= (s1+s2.substring(s1.length(),s2.length()));
+							s1=s1.substring(0,s1.length()-1);
+							s1+="z";
+							}
+							
+							if(s2.length()<s1.length()) {
+							s2= (s2+s1.substring(s2.length(),s1.length()));
+							s2=s2.substring(0,s2.length()-1);
+							s2+="z";
+							}}
+							
+							
+							    			 for (int i=0;i<s1.length();i++)	
+											   	{ poperednisymvolyok=(i>0&&(s1.charAt(i-1)-'0'<=s2.charAt(i-1)-'0')&&poperednisymvolyok ? true : false);
+											   	if(i==0) poperednisymvolyok=true;
+											   		if((s1.charAt(i)-'0')-(s2.charAt(i)-'0')<0&&poperednisymvolyok) {orderbyalphabet=true; } //else  orderbyalphabet=false;
+											   	}
+							    			 if(chvalue1>chvalue2||(chvalue1==chvalue2&&orderbyalphabet)) return(1);
+							    				else
+							    				return(-1);}
+							});
+					}
+				
+			   	fillMaps.clear();
+				
+			   	if(sort2%2==0)
+			   	{labels1.clear();
+			   		for(int i=0;i<labels.size();i++)
+					{
+			   			labels1.add(labels.get(i));
+					}
+			   		labels.clear();
+			   		for(int i=labels1.size();i>0;i--)
+					{if (labels1.get(i-1)!=null)
+			   			labels.add(labels1.get(i-1));
+					}
+			   	}
+			   
+				for(int i=0;i<labels.size();i++)
+				{int chvalue=0;
+				map2= new HashMap<String, String>();
+					  map2.put("rowid", ""+i  );
+					  map2.put("col_1",""+ labels.get(i));
+					  for (int why=0;why<labels.get(i).length();why++){
+			            chvalue+=charvalues.get(labels.get(i).charAt(why));
+					  }
+					  	map2.put("col_2",""+ chvalue);
+			            map2.put("col_3",""+ labels.get(i).length());
+						  fillMaps.add(map2);
+				}
+		
+		 adapter = new SpecialAdapter(this,fillMaps,R.layout.grid_item,from,to);
+				lvCustomList.setAdapter(adapter);				
 				break;
+			
 			case R.id.ImageButton02:
 				sortbylen();
 				break;
@@ -372,7 +495,6 @@ public void onClick(View v)
 				{
 				  public int compare(String s1,String s2)
 				   {
-				   	
 					  //int x1 =(s1.charAt(0)- '0'); 
 				//		   int x2=( s2.charAt(0)- '0');
 					  if((s1.length() - s2.length()<0)) {return(-1); }
@@ -428,11 +550,15 @@ public void onClick(View v)
 	   	fillMaps.clear();
 	   	
 		for(int i=0;i<labels.size();i++)
-		{
+		{ int chvalue=0;
 			//rowid++;
 		map2= new HashMap<String, String>();
 			  map2.put("rowid", ""+i  );
 	            map2.put("col_1",""+ labels.get(i));
+	            for (int why=0;why<labels.get(i).length();why++){
+		            chvalue+=charvalues.get(labels.get(i).charAt(why));
+				  }
+				  	map2.put("col_2",""+ chvalue);
 	            map2.put("col_3",""+ labels.get(i).length());
 				  fillMaps.add(map2);
 		}
@@ -454,6 +580,14 @@ public void onClick(View v)
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			   Toast.makeText(getApplicationContext(), "ну",//((TextView) view).getText(),
+					    Toast.LENGTH_SHORT).show();
+		
+			Cursor   cursor3=db.rawQuery("Select name,value from main",null);
+			while (cursor3.moveToNext()) 
+			{
+			String name = cursor3.getString(cursor3.getColumnIndex("Name"));
+			name+=name;		}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

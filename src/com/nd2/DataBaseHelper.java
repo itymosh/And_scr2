@@ -14,17 +14,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+	public static final String TABLE_NAME = "Main";
+//	private static final String SQL_CREATE_ENTRIES = "CREATE TABLE "+ TABLE_NAME+" ( Code Integer, Name STRING,Value Integer);";
+//	private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "+ TABLE_NAME;
     private Context mycontext;
- 
-   // ContextWrapper cw =new ContextWrapper(getActivty().getApplicationContext());
- 
 	private static final String DB_NAME = "Ukrainian_Explanatory_Dictionary.db"; 
     public SQLiteDatabase myDataBase;
- 
 	private String DB_PATH = "/data/data/com.nd2/databases/";
- 
- 
- 
+
+	
     public DataBaseHelper(Context context) throws IOException {
         super(context, DB_NAME, null, 1);
         this.mycontext=context;
@@ -32,6 +30,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (dbexist) {
             System.out.println("База данных существует");
             opendatabase(); 
+            
         } else {
             System.out.println("База данных не существует!");
             createdatabase();
@@ -93,10 +92,42 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
  
+    private void copynewdatabase()
+    {
+        Log.i("Database",
+                "Новая база данных копируется на устройство!");
+        byte[] buffer = new byte[1024];
+        OutputStream myOutput = null;
+        int length;
+        // Открываем локальную БД как входящий поток
+        InputStream myInput = null;
+        try
+        {
+            myInput = mycontext.getAssets().open(DB_NAME);
+            // Передаем данные из inputfile в outputfile
+            myOutput = new FileOutputStream(DB_PATH + DB_NAME);
+            while((length = myInput.read(buffer)) > 0)
+            {
+                myOutput.write(buffer, 0, length);
+            }
+            myOutput.close();
+            myOutput.flush();
+            myInput.close();
+            Log.i("Database",
+                    "Новая база данных скопирована на устройство");
+ 
+ 
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
     public void opendatabase() throws SQLException {
         // Открываем базу данных
         String mypath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(mypath, null, SQLiteDatabase.OPEN_READWRITE);
+       // ATTACH "database2file" AS db2
     }
  
     public synchronized void close() {
@@ -108,14 +139,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
  
 	@Override
 	public void onCreate(SQLiteDatabase arg0) {
-		// TODO Auto-generated method stub
- 
+	//	arg0.execSQL(SQL_CREATE_ENTRIES);
+ //
 	}
  
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
- 
+	public void onUpgrade(SQLiteDatabase arg0, int oldVersion, int newVersion) {
+		Log.w("LOG_TAG", "Обновление базы данных с версии " + oldVersion
+				+ " до версии " + newVersion + ", которое удалит все старые данные");
+	//	arg0.execSQL(SQL_DELETE_ENTRIES);
+		onCreate(arg0);
+        File dbfile = new File(DB_PATH + DB_NAME);
+		SQLiteDatabase.deleteDatabase(dbfile);  //deleteDatabase = API 16 or higher LEVEL ONLY !!
+        copynewdatabase();
 	}
  
 }
