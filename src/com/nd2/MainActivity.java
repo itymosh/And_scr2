@@ -13,20 +13,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
-
-
-
-
-//import com.nd2.SQ;
-//import com.nd2.R;	
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -35,7 +34,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 public class MainActivity extends ActionBarActivity {
 	    Spinner s;
 		EditText txtData1;	
@@ -55,13 +53,43 @@ public class MainActivity extends ActionBarActivity {
 			   Map<Character,String> chars;
 			   String[] from = new String[] {"rowid", "col_1","col_2","col_3"};
 		        int[] to = new int[] { R.id.item1, R.id.item2, R.id.item3,R.id.item4 };
+		        WebView webView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
-	{
+	{//set up notitle 
+        
+        //set up full screen
+         
+        requestWindowFeature(Window.FEATURE_NO_TITLE); 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
 		super.onCreate(savedInstanceState);
+		//android.app.ActionBar actionBar = getActionBar();
+		//  actionBar.hide();
 		setContentView(R.layout.activity_main);
-		
 		txtData1 = (EditText) findViewById(R.id.editText1);
+		txtData1.setInputType(InputType.TYPE_NULL);
+		
+		/*final OnTouchListener otl = new OnTouchListener() {
+			public boolean onTouch (View v, MotionEvent event) {
+			        return true; // the listener has consumed the event
+			}
+			};
+		
+			txtData1.setOnTouchListener(otl);
+		*/
+		
+		
+	/*		txtData1.setOnTouchListener(new OnTouchListener(){
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+				int inType = txtData1.getInputType(); // backup the input type
+				txtData1.setInputType(InputType.TYPE_NULL); // disable soft input
+				txtData1.onTouchEvent(event); // call native handler
+				txtData1.setInputType(inType); // restore input type
+				return true; // consume touch even
+				}
+				});
+		*/
 		 try {
 			 dbHelper = new DataBaseHelper(this);
 	//		 dbHelper.onUpgrade(db,1,2);
@@ -98,8 +126,8 @@ public void onClick(View v)
 			int i;
 			String q="" ,qq="",name,timestart,timeend, charthatwedontneed="",word1="";
 			
-			String word=txtData1.getText().toString();
-		//	String word="тимни";//"протимс";
+	//		String word=txtData1.getText().toString();
+			String word="протимс";
 		    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date(); //get current date time with Date()
 			timestart=(dateFormat.format(date));
@@ -124,7 +152,9 @@ public void onClick(View v)
 				chars.put(cursor1.getString(cursor1.getColumnIndex("Name")).charAt(0),cursor1.getString(cursor1.getColumnIndex("Code")));
 				charvalues.put(cursor1.getString(cursor1.getColumnIndex("Name")).charAt(0),cursor1.getInt(cursor1.getColumnIndex("Value")));
 				}
-				else charthatwedontneed+="\'%"+cursor1.getString(cursor1.getColumnIndex("Name"))+"%\') and word not like (";
+				else
+					if(!cursor1.getString(cursor1.getColumnIndex("Name")).equals("'"))
+					charthatwedontneed+="\'%"+cursor1.getString(cursor1.getColumnIndex("Name"))+"%\') and word not like (";
 				}
 			cursor1.close();
 			Iterator<Entry<Character, String>> it2,it;
@@ -166,6 +196,8 @@ public void onClick(View v)
 					while (cursor2.moveToNext()) 
 						{
 						name = cursor2.getString(cursor2.getColumnIndex("word"));
+						name=(name.indexOf("&apos;")>0 ? name.substring(0,name.indexOf("&apos;"))+"'"+name.substring(name.indexOf(";")+1) :name);
+						//тут прибираються слова з повторами букв (напр. титри з "три") 
 						wrongword=true;
 						word1=word;
 						for ( i=0; i<(name.length());i++)
@@ -268,19 +300,51 @@ public void onClick(View v)
 	//	default: Log.i("1w","ss"); 
 			
 			lvCustomList.setOnItemClickListener(new OnItemClickListener() {
+				
 				  public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
 				  {
+					  
+					/*  то є зміна коліру рядку в listview
+					 *private View mviewPre;
+				private int posSel = -1;
+				private int positionPre = -1;
+			    private int FirstItemPos; 
+					 * posSel = position;              
+		                FirstItemPos = adapter.getFirstVisiblePosition();
+		                mviewPre = adapter.getChildAt(positionPre - FirstItemPos);
+		              
+		                if (mviewPre != null) {
+		                    mviewPre
+		                            .setBackgroundResource((positionPre & 1) == 1 ? R.color.material_blue_grey_900   : R.color.material_deep_teal_200);
+		                }
+		         
+		                if (posSel != positionPre) {
+		                	adapter.getChildAt(posSel - FirstItemPos)
+		                            .setBackgroundResource(
+		                                    (posSel & 1) == 1 ? R.color.material_blue_grey_900   : R.color.material_deep_teal_200);
+		                }
+		 
+		                positionPre = position;
+		                 adapter.setBackgroundResource(R.color.material_deep_teal_500);
+		        */
+		               
+		                 
+		            //    setTitle( position );
 				    TextView item2 = (TextView)view.findViewById(R.id.item2);
 				    item2.setTextColor(android.graphics.Color.YELLOW);
-				   
-				    query = "SELECT full FROM tbl"+chars.get(item2.getText().toString().charAt(0))+"x"+chars.get(item2.getText().toString().charAt(1))+" where word like '"+item2.getText().toString()+"'";
+					String word_with_apostrof=item2.getText().toString();
+					word_with_apostrof=(word_with_apostrof.indexOf("'")>0 ? word_with_apostrof.substring(0,word_with_apostrof.indexOf("'"))+"&apos;"+word_with_apostrof.substring(word_with_apostrof.indexOf("'")+1) :word_with_apostrof);
+					
+				    query = "SELECT full FROM tbl"+chars.get(item2.getText().toString().charAt(0))+"x"+chars.get(item2.getText().toString().charAt(1))+" where word like '"+word_with_apostrof+"'";
 				   Cursor cursor2 = db.rawQuery(query, null);
 					
 					
-					
-					while (cursor2.moveToNext()) 
+			    
+			
+			    while (cursor2.moveToNext()) 
 						{
-						Toast.makeText(getApplicationContext(), cursor2.getString(cursor2.getColumnIndex("full")),Toast.LENGTH_LONG).show();
+
+								Toast.makeText(getApplicationContext(), cursor2.getString(cursor2.getColumnIndex("full")),Toast.LENGTH_LONG).show();
 						}
 				    
 				    
@@ -351,12 +415,18 @@ public void onClick(View v)
 			   			labels.add(labels1.get(i-1));
 					}
 			   	}
-			   
+			   	map2= new HashMap<String, String>();
+			   	map2.put("rowid", "#"  );
+		          map2.put("col_1","Word");
+		          map2.put("col_2","Value");
+		          map2.put("col_3","Length");
+		          fillMaps.add(map2);
+			   		
 				for(int i=0;i<labels.size();i++)
 				{int chvalue=0;
 					//rowid++;
 				map2= new HashMap<String, String>();
-					  map2.put("rowid", ""+i  );
+					  map2.put("rowid", ""+(i+1)  );
 					  map2.put("col_1",""+ labels.get(i));
 					  for (int why=0;why<labels.get(i).length();why++){
 			            chvalue+=charvalues.get(labels.get(i).charAt(why));
@@ -460,11 +530,17 @@ public void onClick(View v)
 			   			labels.add(labels1.get(i-1));
 					}
 			   	}
-			   
+			   	map2= new HashMap<String, String>();
+			   	map2.put("rowid", "#"  );
+		          map2.put("col_1","Word");
+		          map2.put("col_2","Value");
+		          map2.put("col_3","Length");
+		          fillMaps.add(map2);
+			   	
 				for(int i=0;i<labels.size();i++)
 				{int chvalue=0;
 				map2= new HashMap<String, String>();
-					  map2.put("rowid", ""+i  );
+					  map2.put("rowid", ""+(i+1)  );
 					  map2.put("col_1",""+ labels.get(i));
 					  for (int why=0;why<labels.get(i).length();why++){
 			            chvalue+=charvalues.get(labels.get(i).charAt(why));
@@ -480,6 +556,9 @@ public void onClick(View v)
 			
 			case R.id.ImageButton02:
 				sortbylen();
+				break;
+			case R.id.letter_q:
+				 Toast.makeText(getApplicationContext(), "ну",Toast.LENGTH_SHORT).show();
 				break;
 		}
 		
@@ -549,11 +628,18 @@ public void onClick(View v)
 		}
 	   	fillMaps.clear();
 	   	
+	   	  map2= new HashMap<String, String>();
+		  map2.put("rowid", "#"  );
+          map2.put("col_1","Word");
+          map2.put("col_2","Value");
+          map2.put("col_3","Length");
+          fillMaps.add(map2);
+	   	
 		for(int i=0;i<labels.size();i++)
 		{ int chvalue=0;
 			//rowid++;
 		map2= new HashMap<String, String>();
-			  map2.put("rowid", ""+i  );
+			  map2.put("rowid", ""+(i+1)  );
 	            map2.put("col_1",""+ labels.get(i));
 	            for (int why=0;why<labels.get(i).length();why++){
 		            chvalue+=charvalues.get(labels.get(i).charAt(why));
@@ -565,7 +651,11 @@ public void onClick(View v)
 
  adapter = new SpecialAdapter(this,fillMaps,R.layout.grid_item,from,to);
 		lvCustomList.setAdapter(adapter);	
+		int[] colors = {0, 0xFF5B9BD5, 0}; // red for the example
+		lvCustomList.setDivider(new GradientDrawable(Orientation.RIGHT_LEFT, colors));
+		lvCustomList.setDividerHeight(1);
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

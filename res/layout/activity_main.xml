@@ -8,53 +8,340 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.nd2.MainActivity" >
 
+    <GridLayout
+        android:id="@+id/gridLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="11"
+        android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/letter_q"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="0dip"
+                android:layout_marginStart="0dip"
+                android:layout_marginTop="60dip"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:maxHeight="10dip"
+                android:onClick="onClick"
+                android:scaleType="fitXY"
+                android:src="@drawable/letter_scr" />
+
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="60dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+<ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+       <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+          <ImageView
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+     android:layout_columnSpan="2"
+            android:maxHeight="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/letter_scr" />
+    </GridLayout>
+
     <EditText
         android:id="@+id/editText1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="7 літер" />
-
-    <Button
-        android:id="@+id/seven_letters"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/editText1"
-        android:height="20dp"
-        android:onClick="onClick"
-        android:text="OK"
-        android:width="100dip" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spinner1"
-        android:layout_alignParentBottom="true"
-        android:text="TextView" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2" />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/spinner2"
-        android:layout_toLeftOf="@+id/seven_letters" />
+        android:inputType="text" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/spinner1"
         android:layout_below="@+id/imageButton1" >
-
     </ListView>
 
     <ImageButton
@@ -62,35 +349,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/listView1"
-        android:layout_alignRight="@+id/listView1"
-        android:layout_marginRight="3dp"
         android:height="30dip"
         android:onClick="onClick"
         android:src="@drawable/tr_med"
         android:width="100dip" />
 
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ImageButton02"
+        android:layout_below="@+id/spinner2"
+        android:visibility="invisible" />
+
     <ImageButton
         android:id="@+id/ImageButton01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_below="@+id/seven_letters"
-        android:layout_marginRight="3dp"
+        android:layout_above="@+id/listView1"
+        android:layout_alignRight="@+id/listView1"
         android:height="30dip"
         android:onClick="onClick"
         android:src="@drawable/tr_med"
+        android:width="100dip" />
+
+    <Button
+        android:id="@+id/seven_letters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:height="20dp"
+        android:onClick="onClick"
+        android:text="OK"
         android:width="100dip" />
 
     <ImageButton
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/listView1"
-        android:layout_alignTop="@+id/ImageButton01"
-        android:layout_marginLeft="17dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ImageButton01"
         android:height="30dip"
         android:onClick="onClick"
         android:src="@drawable/tr_med"
         android:width="100dip" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_alignParentTop="true"
+        android:text="TextView" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listView1"
+        android:layout_alignLeft="@+id/listView1"
+        android:visibility="invisible" />
 
 </RelativeLayout>

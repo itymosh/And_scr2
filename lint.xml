@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="InlinedApi">
+        <ignore path="src/com/nd2/MainActivity.java" />
+    </issue>
     <issue id="NewApi">
         <ignore path="src/com/nd2/DataBaseHelper.java" />
+        <ignore path="src/com/nd2/MainActivity.java" />
     </issue>
     <issue id="SdCardPath" severity="ignore" />
     <issue id="SimpleDateFormat" severity="ignore" />
