@@ -49,8 +49,9 @@ public class MainActivity extends Activity {
 		ListView lvCustomList;
 		Map<Character,Integer> charvalues;
 		HashMap<String, String> map2; 
-		ArrayList<String>	labels = new ArrayList<String>();
-		ArrayList<String>	labels1 = new ArrayList<String>();
+		ArrayList<String>	labels = new ArrayList<String>(); //main
+		ArrayList<String>	labels1 = new ArrayList<String>(); //only for sort
+		ArrayList<String>	labels2 = new ArrayList<String>(); //cache
 		List<HashMap<String, String>> fillMaps;
 		SpecialAdapter adapter;
 		Map<Character,String> chars;
@@ -71,6 +72,7 @@ public class MainActivity extends Activity {
 		//	 actionBar.hide();
 	//	txtData1 = (EditText) findViewById(R.id.editText1);
 	//	txtData1.setInputType(InputType.TYPE_NULL);
+		  	labels2.clear();
 		 try {
 			 dbHelper = new DataBaseHelper(this);
 	//		 dbHelper.onUpgrade(db,1,2);
@@ -444,7 +446,7 @@ public class MainActivity extends Activity {
 				letter_view_number--;
 				runquery();
 				break;
-		}
+		}	
 		
 		
 }
@@ -508,6 +510,12 @@ public class MainActivity extends Activity {
 	public void runquery()
 { 
 	labels.clear();
+	for(int p=0;p<labels2.size();p++)
+	{
+		labels.add(p,labels2.get(p)); 
+	}
+	//labels=labels2;
+
 	sort1=0;sort2=1;sort3=0;
 	click++;
 //	s = (Spinner) findViewById(R.id.spinner1);
@@ -516,17 +524,26 @@ public class MainActivity extends Activity {
 //    ArrayAdapter<String> dataAdapter;
 //	dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
 	int i;
-	String q="" ,qq="",name,timestart,timeend, charthatwedontneed="",word1="";
+	String q="" ,qq="",
+			name,timestart,timeend, charthatwedontneed="",word1="";
 	
-//		String word=txtData1.getText().toString();
+	//String word=txtData1.getText().toString();
 	//word="протимс";
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	Date date = new Date(); //get current date time with Date()
 	timestart=(dateFormat.format(date));
 	chars = new HashMap<Character, String>();
 	charvalues = new HashMap<Character, Integer>();
-	if(q.length()>4) q=q.substring(0,q.length()-3);
-	if(qq.length()>9) qq=qq.substring(0,qq.length()-14);
+	if (labels2.size()!=0)	
+	{q="";
+		for(int p=0;p<labels2.size();p++)
+	{
+		q+=(labels2.get(p)) +"') and word not like ('";
+	}}
+	else q="') and word not like ('";
+	//labels2.clear();
+//	if(q.length()>4) q=q.substring(0,q.length()-3);  //for cache
+	//if(qq.length()>9) qq=qq.substring(0,qq.length()-14); 
 	Cursor cursor1 = db.rawQuery("SELECT Code, Name, Value FROM Main",null);
 	while (cursor1.moveToNext()) 
 		{
@@ -562,7 +579,9 @@ public class MainActivity extends Activity {
 			if(t)
 			{
 				query = "SELECT word FROM tbl"+(String)pairs.getValue()+"x"+(String)pairs2.getValue()
-					+" where word not like ("+charthatwedontneed.substring(0,(charthatwedontneed.length())-22)+"\')";//+" where word like("+qq;	
+					+" where word not like ("+charthatwedontneed.substring(0,(charthatwedontneed.length())-22)+"\')"
+						+ " and word not like ('"+q.substring(0,(q.length())-21)
+							;//+" where word like("+qq;	
 			cursor2 = db.rawQuery(query, null);
 	
 			while (cursor2.moveToNext()) 
@@ -587,7 +606,7 @@ public class MainActivity extends Activity {
 				if(wrongword) 
 				{
 				labels.add(name);
-				labels1.add(name);
+				labels2.add(name);
 				}	
 				}
 			cursor2.close();  			
