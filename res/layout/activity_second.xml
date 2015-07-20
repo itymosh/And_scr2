@@ -1,16 +1,54 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activitysecond"
+       
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nd2.SecondActivity" >
+    android:columnCount="1"
+    android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
+     <GridLayout
+         android:id="@+id/bottomlinear"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentRight="true"
+         android:background="@drawable/normal_shape"
+         android:columnCount="3"
+         android:orientation="horizontal" >
+
+         <TextView
+             android:id="@+id/text"
+             android:layout_width="100dp"
+             android:layout_height="100dp"
+             android:text="Drag the image and drop it here..." />
+
+         <ImageView
+             android:id="@+id/imageView10"
+             android:layout_width="70dp"
+             android:layout_height="91dp"
+             android:layout_gravity="left|top"
+             android:layout_row="0"
+             android:src="@drawable/a" />
+
+     </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/toplinear"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_column="0"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_row="1"
+        android:background="@drawable/target_shape" >
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+    </LinearLayout>
+
+</GridLayout>

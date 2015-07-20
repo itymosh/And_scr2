@@ -11,7 +11,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
+
+
+
+
+
+
+
 
 
 //import android.text.InputType;
@@ -19,11 +27,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.View.OnClickListener;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -38,7 +51,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.widget.SwipeRefreshLayout;
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener{
 	ImageView letterView;
 	
 	    Spinner s;
@@ -61,15 +74,33 @@ public class MainActivity extends Activity {
 		int[] to = new int[] { R.id.item1, R.id.item2, R.id.item3,R.id.item4 };
 		WebView webView;
 		SwipeRefreshLayout  SwipeRefreshLayout;
+		 private static final int SWIPE_MIN_DISTANCE = 120;
+		    private static final int SWIPE_MAX_OFF_PATH = 250;
+		    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+		    private GestureDetector gestureDetector;
+		    View.OnTouchListener gestureListener;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 	 requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		 getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN); 
 		super.onCreate(savedInstanceState);
-
-		  	setContentView(R.layout.activity_main);
 		
+		// Gesture detection
+        Bundle genericBundle = this.getIntent().getExtras();
+        gestureDetector = new GestureDetector(new MyGestureDetector(genericBundle));
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+		  	setContentView(R.layout.activity_main);
+		    Random rnd = new Random();
+	        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+	        findViewById(R.id.Layout1).setOnClickListener(this); 
+	      findViewById(R.id.Layout1).setOnTouchListener(gestureListener);
+			  
+	     //   findViewById(R.id.Layout1).setOnTouchListener(gestureListener);
 		//	  getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		  //	 android.app.ActionBar actionBar = this.getActionBar();
 		//	 actionBar.hide();
@@ -832,6 +863,49 @@ public class MainActivity extends Activity {
 		lvCustomList.setDividerHeight(1);
 	}
 
+	  class MyGestureDetector extends SimpleOnGestureListener {
+	    	private Bundle b;
+	    	public MyGestureDetector(Bundle b){
+	    		super();
+	    		this.b = b;
+	    	}
+	        @Override
+	        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+	            try {
+	                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+	                    return false;
+	                // right to left swipe
+	                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	                    Toast.makeText(MainActivity.this, "Left Swipe", Toast.LENGTH_SHORT).show();
+	                    Intent i = new Intent (MainActivity.this, SecondActivity.class);
+	              /*     if(b.getInt("current") < b.getInt("max")){
+	                    i.putExtra("current", b.getInt("current")+1);
+	                   }else{
+	                	   i.putExtra("current", 1); 
+	                   }
+	                    i.putExtra("max", 2);*/
+	                    MainActivity.this.startActivity(i);
+	                    finish();
+	                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	                    Toast.makeText(MainActivity.this, "Right Swipe", Toast.LENGTH_SHORT).show();
+	                    Intent i = new Intent (MainActivity.this, SecondActivity.class);
+	             /*      if(b.getInt("current") > 1){
+	                    i.putExtra("current", b.getInt("current")-1);
+	                   }else{
+	                	   i.putExtra("current", 2); 
+	                   }
+	                    i.putExtra("max", 2);*/
+	                    MainActivity.this.startActivity(i);
+	                    finish();
+	                }
+	            } catch (Exception e) {
+	                // nothing
+	            }
+	            return false;
+	        }
+
+	    }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -851,7 +925,7 @@ public class MainActivity extends Activity {
 					    Toast.LENGTH_SHORT).show();
 		
 			   startActivity(new Intent(MainActivity.this, SecondActivity.class));
-			//return true;
+			//return true; 
 		}
 		return super.onOptionsItemSelected(item);
 	}
