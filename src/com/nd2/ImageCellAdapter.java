@@ -69,7 +69,7 @@ public View getView (int position, View convertView, ViewGroup parent)
         v = new ImageCell (mContext);
         v.setLayoutParams(new GridView.LayoutParams(30, 30));
         v.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        v.setPadding(8, 8, 8, 8);
+      //  v.setPadding(8, 8, 8, 8);
 
     } else {
         v = (ImageCell) convertView;

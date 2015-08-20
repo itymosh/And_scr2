@@ -12,12 +12,16 @@ import java.util.Random;
 
 
 
+
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -75,7 +79,8 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		private DragLayer mDragLayer;             // The ViewGroup within which an object can be dragged.
 		private DeleteZone mDeleteZone;           // A drop target that is used to remove objects from the screen.
 		private int mImageCount = 0;              // The number of images that have been added to screen.
-		private ImageCell mLastNewCell = null;    // The last ImageCell added to the screen when Add Image is clicked.
+		private ImageCell mLastNewCell = null; 
+		private ImageCell mLastNewCell2 = null;// The last ImageCell added to the screen when Add Image is clicked.
 		private boolean mLongClickStartsDrag = false;   // If true, it takes a long click to start the drag operation.
 		                                                // Otherwise, any touch event starts a drag.
 
@@ -109,6 +114,7 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		       mLastNewCell = newView;
 		       mImageCount++;
 
+		    
 		       // Have this activity listen to touch and click events for the view.
 		       newView.setOnClickListener(this);
 		       newView.setOnLongClickListener(this);
@@ -116,7 +122,35 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 
 		    }
 		}
+//:::
+		public void addNewImageToScreen2 (int resourceId)
+		{
+		    if (mLastNewCell2 != null) mLastNewCell2.setVisibility (View.GONE);
 
+		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout02);
+		    if (imageHolder2 != null) {
+		       FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams (LayoutParams.FILL_PARENT, 
+		                                                                   LayoutParams.FILL_PARENT, 
+		                                                                   Gravity.CENTER);
+		       
+		       ImageCell newView2 = new ImageCell (this);
+		       newView2.setImageResource (resourceId);
+		       imageHolder2.addView (newView2, lp2);
+		       newView2.mEmpty = false;
+		       newView2.mCellNumber = -1;
+		       mLastNewCell2 = newView2;
+		       mImageCount++;
+		       newView2.setOnClickListener(this);
+		       newView2.setOnLongClickListener(this);
+		       newView2.setOnTouchListener (this);
+
+		    }		
+		
+		}
+		
+//:::
+		
+		
 		/**
 		 * Add one of the images to the screen so the user has a new image to move around. 
 		 * See addImageToScreen.
