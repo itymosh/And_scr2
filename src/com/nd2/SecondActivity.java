@@ -14,6 +14,8 @@ import java.util.Random;
 
 
 
+
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
@@ -81,6 +83,11 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		private int mImageCount = 0;              // The number of images that have been added to screen.
 		private ImageCell mLastNewCell = null; 
 		private ImageCell mLastNewCell2 = null;// The last ImageCell added to the screen when Add Image is clicked.
+		private ImageCell mLastNewCell3 = null;
+		private ImageCell mLastNewCell4 = null;
+		private ImageCell mLastNewCell5 = null;
+		private ImageCell mLastNewCell6 = null;
+		private ImageCell mLastNewCell7 = null;
 		private boolean mLongClickStartsDrag = false;   // If true, it takes a long click to start the drag operation.
 		                                                // Otherwise, any touch event starts a drag.
 
@@ -117,15 +124,16 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		    
 		       // Have this activity listen to touch and click events for the view.
 		       newView.setOnClickListener(this);
-		       newView.setOnLongClickListener(this);
-		       newView.setOnTouchListener (this);
+	      newView.setOnLongClickListener(this);
+	       newView.setOnTouchListener (this);
 
 		    }
 		}
 //:::
 		public void addNewImageToScreen2 (int resourceId)
 		{
-		    if (mLastNewCell2 != null) mLastNewCell2.setVisibility (View.GONE);
+		    if (mLastNewCell2 != null)
+		    	mLastNewCell2.setVisibility (View.GONE);
 
 		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout02);
 		    if (imageHolder2 != null) {
@@ -147,24 +155,331 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		    }		
 		
 		}
+		public void addNewImageToScreen3 (int resourceId)
+		{
+		    if (mLastNewCell3 != null) mLastNewCell3.setVisibility (View.GONE);
+
+		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout01);
+		    if (imageHolder2 != null) {
+		       FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams (LayoutParams.FILL_PARENT, 
+		                                                                   LayoutParams.FILL_PARENT, 
+		                                                                   Gravity.CENTER);
+		       
+		       ImageCell newView2 = new ImageCell (this);
+		       newView2.setImageResource (resourceId);
+		       imageHolder2.addView (newView2, lp2);
+		       newView2.mEmpty = false;
+		     //  newView2.mCellNumber = -1;
+		       mLastNewCell3 = newView2;
+		       mImageCount++;
+		       newView2.setOnClickListener(this);
+		       newView2.setOnLongClickListener(this);
+		       newView2.setOnTouchListener (this);
+
+		    }		
 		
+		}
+		public void addNewImageToScreen4 (int resourceId)
+		{
+		    if (mLastNewCell4 != null) mLastNewCell4.setVisibility (View.GONE);
+
+		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout03);
+		    if (imageHolder2 != null) {
+		       FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams (LayoutParams.FILL_PARENT, 
+		                                                                   LayoutParams.FILL_PARENT, 
+		                                                                   Gravity.CENTER);
+		       
+		       ImageCell newView2 = new ImageCell (this);
+		       newView2.setImageResource (resourceId);
+		       imageHolder2.addView (newView2, lp2);
+		       newView2.mEmpty = false;
+		     //  newView2.mCellNumber = -1;
+		      mLastNewCell4 = newView2;
+		       mImageCount++;
+		       newView2.setOnClickListener(this);
+		       newView2.setOnLongClickListener(this);
+		       newView2.setOnTouchListener (this);
+
+		    }		
+		
+		}
+		public void addNewImageToScreen5 (int resourceId)
+		{
+		    if (mLastNewCell5 != null) mLastNewCell5.setVisibility (View.GONE);
+
+		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout04);
+		    if (imageHolder2 != null) {
+		       FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams (LayoutParams.FILL_PARENT, 
+		                                                                   LayoutParams.FILL_PARENT, 
+		                                                                   Gravity.CENTER);
+		       
+		       ImageCell newView2 = new ImageCell (this);
+		       newView2.setImageResource (resourceId);
+		       imageHolder2.addView (newView2, lp2);
+		       newView2.mEmpty = false;
+		    //   newView2.mCellNumber = -1;
+		       mLastNewCell5 = newView2;
+		       mImageCount++;
+		       newView2.setOnClickListener(this);
+		       newView2.setOnLongClickListener(this);
+		       newView2.setOnTouchListener (this);
+
+		    }		
+		
+		}
+		public void addNewImageToScreen6 (int resourceId)
+		{
+		    if (mLastNewCell6 != null) mLastNewCell6.setVisibility (View.GONE);
+
+		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout05);
+		    if (imageHolder2 != null) {
+		       FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams (LayoutParams.FILL_PARENT, 
+		                                                                   LayoutParams.FILL_PARENT, 
+		                                                                   Gravity.CENTER);
+		       
+		       ImageCell newView2 = new ImageCell (this);
+		       newView2.setImageResource (resourceId);
+		       imageHolder2.addView (newView2, lp2);
+		       newView2.mEmpty = false;
+		    //   newView2.mCellNumber = -1;
+		       mLastNewCell6 = newView2;
+		       mImageCount++;
+		       newView2.setOnClickListener(this);
+		       newView2.setOnLongClickListener(this);
+		       newView2.setOnTouchListener (this);
+
+		    }		
+		
+		}
+		public void addNewImageToScreen7 (int resourceId)
+		{
+		    if (mLastNewCell7 != null) mLastNewCell7.setVisibility (View.GONE);
+
+		   FrameLayout imageHolder2 = (FrameLayout) findViewById (R.id.FrameLayout06);
+		    if (imageHolder2 != null) {
+		       FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams (LayoutParams.FILL_PARENT, 
+		                                                                   LayoutParams.FILL_PARENT, 
+		                                                                   Gravity.CENTER);
+		       
+		       ImageCell newView2 = new ImageCell (this);
+		       newView2.setImageResource (resourceId);
+		       imageHolder2.addView (newView2, lp2);
+		       newView2.mEmpty = false;
+		    //   newView2.mCellNumber = -1;
+		       mLastNewCell7 = newView2;
+		       mImageCount++;
+		       newView2.setOnClickListener(this);
+		       newView2.setOnLongClickListener(this);
+		       newView2.setOnTouchListener (this);
+
+		    }		
+		
+		}
 //:::
 		
 		
-		/**
-		 * Add one of the images to the screen so the user has a new image to move around. 
-		 * See addImageToScreen.
-		 *
-		 */    
+	//set quantity of each letter
+		int a=1,b=7,c=4,d=4,e=3,f=8,g=3,h=5,i=1,j=10,k=3,l=3,l1=1,l2=1,m=1,m1=2,m2=1,m3=1,m4=1,n=5,o=1,p=2,p1=1,p3=1,q=1,r=4,s=5,t=5,u=2,v=4,w=1,x=1,y=7,z=2;
+public int randomizer()
+{
+	int ff;
+	  Random random = new Random();
+	ff=random.nextInt(34);
+	switch(ff)	
+	{
+	case 1:
+		if (a>0) {
+		a--;
+		return  R.drawable.a;}
+		else return 0;
+	case 2:
+		if (b>0) {
+			b--;
+		return R.drawable.b;}
+		else return 0;
+	case 3:
+		if (c>0) {
+			c--;
+		return R.drawable.c;}
+		else return 0;
+	case 4:
+		if (d>0) {
+			d--;
+		return R.drawable.d;}
+	else return 0;
+	case 5:
+		if (e>0) {
+			e--;
+		return R.drawable.e;}
+else return 0;
+	case 6:
+		if (f>0) {
+			f--;
+		return R.drawable.f;}
+else return 0;
+	case 7:
+		if (g>0) {
+			g--;
+		return R.drawable.g;}
+		else return 0;
+	case 8:
+		if (h>0) {
+			h--;
+		return R.drawable.h;}
+		else return 0;
+	case 9:
+		if (i>0) {
+			i--;
+		return R.drawable.i;}
+		else return 0;
+	case 10:
+		if (j>0) {
+			j--;
+		return R.drawable.j;}
+		else return 0;
+	case 11:
+		if (k>0) {
+			k--;
+		return R.drawable.k;}
+		else return 0;
+	case 12:
+		if (l>0) {
+			l--;
+		return R.drawable.l;}
+		else return 0;
+	case 13:
+		if (l1>0) {
+			l1--;
+		return R.drawable.l1;}
+		else return 0;
+	case 14:
+		if (l2>0) {
+			l2--;
+		return R.drawable.l2;}
+		else return 0;
+	case 15:
+		if (m>0) {
+			m--;
+		return R.drawable.m;}
+		else return 0;
+	case 16:
+		if (m1>0) {
+			m1--;
+		return R.drawable.m1;}
+		else return 0;
+	case 17:
+		if (m2>0) {
+			m2--;
+		return R.drawable.m2;}
+		else return 0;
+	case 18:
+		if (m3>0) {
+			m3--;
+		return R.drawable.m3;}
+		else return 0;
+	case 19:
+		if (m4>0) {
+			m4--;
+		return R.drawable.m4;}
+		else return 0;
+	case 20:
+		if (n>0) {
+			n--;
+		return R.drawable.n;}
+		else return 0;
+	case 21:
+		if (o>0) {
+			o--;
+		return R.drawable.o;}
+		else return 0;
+	case 22:
+		if (p>0) {
+			p--;
+		return R.drawable.p;}
+		else return 0;
+	case 23:
+		if (p1>0) {
+			p1--;
+		return R.drawable.p1;}
+		else return 0;
+	case 24:
+		if (p3>0) {
+			p3--;
+		return R.drawable.p3;}
+		else return 0;
+	case 25:
+		if (q>0) {
+			q--;
+		return R.drawable.q;}
+		else return 0;
+	case 26:
+		if (r>0) {
+			r--;
+		return R.drawable.r;}
+		else return 0;
+	case 27:
+		if (s>0) {
+			s--;
+		return R.drawable.s;}
+		else return 0;
+	case 28:
+		if (t>0) {
+			t--;
+		return R.drawable.t;	}
+		else return 0;
+	case 29:
+		if (u>0) {
+			u--;
+		return R.drawable.u;}
+		else return 0;
+	case 30:
+		if (v>0) {
+			v--;
+		return R.drawable.v;}
+		else return 0;
+	case 31:
+		if (w>0) {
+			w--;
+		return R.drawable.w;}
+		else return 0;
+	case 32:
+		if (x>0) {
+			x--;
+		return R.drawable.x;}
+		else return 0;
+	case 33:
+		if (y>0) {
+			y--;
+		return R.drawable.y;}
+		else return 0;
+	case 34:
+		if (z>0) {
+			z--;
+		return R.drawable.z;}
+		else return 0;
 
+				
+	}
+	return 0;
+	} 
 		public void addNewImageToScreen ()
 		{
-		    int resourceId = R.drawable.hello;
-
-		    int m = mImageCount % 3;
-		    if (m == 1) resourceId = R.drawable.photo1;
-		    else if (m == 2) resourceId = R.drawable.photo2;
-		    addNewImageToScreen (resourceId);
+int first,second,third,fourth,fifth,sixth,seventh;
+		do{first=randomizer();} while (first==0); 
+		    addNewImageToScreen (first);
+		do{second=randomizer();} while (second==0); 
+		    addNewImageToScreen2 (second);
+		do{third=randomizer();} while (third==0); 		    
+		    addNewImageToScreen3 (third);
+		do{fourth=randomizer();} while (fourth==0); 
+		    addNewImageToScreen4 (fourth);
+		do{fifth=randomizer();} while (fifth==0); 
+		    addNewImageToScreen5 (fifth);
+		do{sixth=randomizer();} while (sixth==0); 
+		    addNewImageToScreen6 (sixth);
+		do{seventh=randomizer();} while (seventh==0); 
+		    addNewImageToScreen7 (seventh);
+		    
 		}
 
 		/**
@@ -188,6 +503,7 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		public void onClickAddImage (View v) 
 		{
 		    addNewImageToScreen ();
+	
 		}
 
 		/**
@@ -198,9 +514,8 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 		public void onClickWglxy (View v) {
 		    Resources res = getResources ();
 		    toast (res.getString (R.string.demo_toast));
-		    Intent viewIntent = new Intent ("android.intent.action.VIEW", 
-		                                    Uri.parse (res.getString (R.string.demo_uri)));
-		    startActivity(viewIntent);
+
+
 		    
 		}
 
@@ -263,8 +578,7 @@ public class SecondActivity extends Activity implements OnClickListener,OnLongCl
 	        Toast.makeText (getApplicationContext(), 
 	                        getResources ().getString (R.string.instructions),
 	                        Toast.LENGTH_LONG).show ();
-	        
-	
+	        addNewImageToScreen ();
 	}
 	
 	
@@ -381,6 +695,7 @@ public boolean onOptionsItemSelected (MenuItem item)
         case ADD_OBJECT_MENU_ID:
             // Add a new object to the screen;
             addNewImageToScreen ();
+        
             return true;
         case CHANGE_TOUCH_MODE_MENU_ID:
             mLongClickStartsDrag = !mLongClickStartsDrag;

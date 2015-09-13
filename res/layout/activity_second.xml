@@ -36,7 +36,7 @@
         android:id="@+id/image_grid_view"
         android:layout_width="match_parent"
         android:layout_height="310dp"
-        android:layout_marginTop="50dip"
+        android:layout_marginTop="30dip"
         android:background="@color/grid_background"
         android:horizontalSpacing="1dip"
         android:numColumns="@integer/num_columns"
@@ -52,33 +52,74 @@
     android:weightSum="1.0" >
 
     <FrameLayout
-        android:id="@+id/FrameLayout02"
-        android:layout_width="38dp"
-        android:layout_height="80dp" >
+        android:id="@+id/image_source_frame"
+        android:layout_width="45dp"
+        android:layout_height="55dp" >
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center" />
+               android:layout_height="55dp"/>
     </FrameLayout>
-
-    <Button
-        android:id="@+id/button_add_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickAddImage"
-        android:text="Add image" />
 
     <FrameLayout
-        android:id="@+id/image_source_frame"
-        android:layout_width="38dp"
-        android:layout_height="80dp" >
+        android:id="@+id/FrameLayout01"
+         android:layout_width="45dp"
+        android:layout_height="55dp" >
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center" />
+               android:layout_height="55dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout02"
+         android:layout_width="45dp"
+        android:layout_height="55dp" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="55dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout03"
+         android:layout_width="45dp"
+        android:layout_height="55dp" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+                android:layout_height="55dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout04"
+        android:layout_width="45dp"
+        android:layout_height="55dp" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="55dp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout05"
+        android:layout_width="45dp"
+        android:layout_height="55dp" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="55dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout06"
+       android:layout_width="45dp"
+        android:layout_height="55dp" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="55dp" />
     </FrameLayout>
 
 </LinearLayout>
@@ -86,6 +127,15 @@
 </LinearLayout>
 
 </LinearLayout>
+
+<Button
+    android:id="@+id/button1"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="onClickAddImage"
+    android:text="next"
+    android:visibility="visible" />
 
 </com.nd2.DragLayer>
 

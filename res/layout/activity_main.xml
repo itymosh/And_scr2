@@ -846,14 +846,4 @@
         android:layout_centerVertical="true"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/number"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignRight="@+id/linearLayout1"
-        android:layout_below="@+id/textView2"
-        android:text="TextView" />
-
 </RelativeLayout>
